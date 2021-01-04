@@ -1,0 +1,68 @@
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url("../images/backgroundGame2.jpg");
+    background-size: cover;
+}
+
+canvas{
+  background-image: url('../images/canvas-background.jpg');
+  background-size: cover;
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  
+}
+
+#start-game{
+  position: absolute;
+  left: 50%;
+  top: 85%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 40px;
+}                             
+
+#logo{
+  width: 520px;
+  height: 140px;
+  position: relative;
+  left: 35%;
+}
+
+#arrow{
+  width: 200px;
+  height:100px;
+  position: absolute;
+  top: 86%;
+  left: 35%;
+}
+
+#space-arrow{
+  width: 250px;
+  height: 80px;
+  position: absolute;
+  top: 88%;
+  left: 50%;
+}
+
+#move{
+  position: absolute;
+  top: 82%;
+  left: 38%;
+  font-size: large;
+  color: white;
+}
+
+#shoot{
+  font-size: 20px;
+  position: absolute;
+  color: white;
+  top: 82%;
+  left: 55%;
+}
