@@ -23,6 +23,7 @@ class Explosion{
             this.height = 150
         }
         this.sprite.drawCount = 0
+        this.show = false
     }
 
     isReady() {
@@ -30,8 +31,7 @@ class Explosion{
     }
 
     draw() {
-       
-        if (this.isReady()) {
+        if (this.isReady() && this.show) {
             this.ctx.drawImage(
                 this.sprite,
                 this.sprite.horizontalFrameIndex * this.sprite.frameWidth,
@@ -44,24 +44,27 @@ class Explosion{
                 this.height
             )
                         
-            this.sprite.drawCount++
             this.animate()
         }
     }
 
     animate() {
-        
-        if (this.sprite.drawCount % MOVEMENT_FRAMES_EX === 0) {
+        if (this.sprite.drawCount > MOVEMENT_FRAMES_EX) {
             this.sprite.horizontalFrameIndex +=1
-    
-            if (this.sprite.drawCount % 5 === 0){
+
+            if (this.sprite.horizontalFrameIndex >= 4 && this.sprite.verticalFrameIndex === 0){
                 this.sprite.horizontalFrameIndex = 0
                 this.sprite.verticalFrameIndex = 1
+            }
+            if (this.sprite.horizontalFrameIndex >= 4 && this.sprite.verticalFrameIndex === 1){
+                this.sprite.horizontalFrameIndex = 0
+                this.sprite.verticalFrameIndex = 0
+                this.show = false
             }
 
             this.sprite.drawCount = 0
         }
 
-        this.sprite.drawCount +=1
+        this.sprite.drawCount += 1
     }
 }

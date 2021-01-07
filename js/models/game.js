@@ -17,7 +17,6 @@ class Game{
        this.drawCount = 0
        this.health = 100
        this.collidesShip = false
-       this.showExplosion = false
        this.explosionEnemy = new Explosion(this.ctx, 0, 0)
 
        //SOUNDS
@@ -101,9 +100,7 @@ class Game{
         this.enemies.forEach(enemy => enemy.draw())
         this.bulletsEnemies.forEach(bullet => bullet.draw())
         
-        if(this.showExplosion){
-            this.explosionEnemy.draw()
-        }
+        this.explosionEnemy.draw()
         
         this.ctx.save()
         this.ctx.font = '18px Arial'
@@ -146,14 +143,9 @@ class Game{
                 this.explosionEnemy.verticalFrameIndex = 0
                 this.explosionEnemy.x = enemy.x
                 this.explosionEnemy.y = enemy.y
-                this.sounds.explo.currentTime = 0
+                this.sounds.explo.currentTime = 0.5
                 this.sounds.explo.play()
-                this.showExplosion = true
-                //this.explosionEnemy.draw()
-
-                setTimeout(() => {
-                    this.showExplosion = false
-                }, 2000);
+                this.explosionEnemy.show = true
                 
                 return false
             }
