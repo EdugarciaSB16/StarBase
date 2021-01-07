@@ -10,8 +10,8 @@ class Game{
         //INSTANCIAS
        this.background = new Background(this.ctx)
        this.ship = new Ship(this.ctx, 20, this.canvas.height / 2)
-       this.enemy = new Enemy()
        this.enemies = []
+       this.enemy = new Enemy()
        this.bulletsEnemies = []
        this.bulletEnemy = new Bullet_Enemy()
        this.drawCount = 0
@@ -19,7 +19,8 @@ class Game{
        this.collidesShip = false
        this.showExplosion = false
        this.explosionEnemy = new Explosion(this.ctx, 0, 0)
-
+      
+       
        //SOUNDS
        const themeGame =  new Audio('./sounds/music-back.mp3')
        themeGame.volume = 0.4
@@ -33,7 +34,6 @@ class Game{
 
         this.gameover = new Image()
         this.gameover.src = 'images/gameover.png'
-
         this.gameover.isReady = false
 
         this.gameover.onload = () => {
@@ -54,6 +54,14 @@ class Game{
                 if (this.drawCount % OBS_FRAMES === 0) {
                     this.addEnemies()
                     this.drawCount = 0
+                }else if(this.points >=2){
+                    //Hacer transion al boss
+                    this.enemies = []
+                    this.bulletsEnemies = []
+                    this.boss = new Boss(this.ctx, 300, 300)
+                    setTimeout(() => {
+                       this.drawBoss()
+                    }, 1000);
                 }
                 
             }, this.fps);
@@ -101,9 +109,9 @@ class Game{
         this.enemies.forEach(enemy => enemy.draw())
         this.bulletsEnemies.forEach(bullet => bullet.draw())
         
-        if(this.showExplosion){
+        /*if(this.showExplosion){
             this.explosionEnemy.draw()
-        }
+        }*/
         
         this.ctx.save()
         this.ctx.font = '18px Arial'
@@ -112,6 +120,10 @@ class Game{
         this.ctx.restore()
     }
     
+    drawBoss(){
+        this.boss.draw()
+    }
+
     move(){
         this.background.move()
         this.ship.move()
@@ -135,23 +147,24 @@ class Game{
 
     checkCollisionsEnemy(){
         //COLISION BULLET -> ENEMY
-       const restPoints = this.enemies.filter((enemy)=>{
+        const restEnemy = this.enemies.filter((enemy)=>{
 
-            if(this.ship.bullet.collidesWith(enemy)){
+            /*if(this.ship.bullet.collidesWith(enemy)){
                 this.explosionEnemy.horizontalFrameIndex = 0
                 this.explosionEnemy.verticalFrameIndex = 0
                 this.explosionEnemy.x = enemy.x
                 this.explosionEnemy.y = enemy.y
-            }
+            }*/
 
            return !this.ship.bullet.collidesWith(enemy)
         })
     
-        const newPoints = this.enemies.length - restPoints.length
-        this.points += newPoints
+        const numEnemy = this.enemies.length - restEnemy.length
+        this.points += numEnemy
         
-        if (newPoints) {
-            this.ship.bullets = this.ship.bullets.filter(bullet => !this.ship.bullet.collidesWith(bullet))
+        if (numEnemy) {
+           // this.ship.bullets = this.ship.bullets.filter(bullet => !this.ship.bullet.collidesWith(bullet))
+         
             this.sounds.explo.currentTime = 0
             this.sounds.explo.play()
             this.showExplosion = true
@@ -159,11 +172,9 @@ class Game{
             setTimeout(() => {
                 this.showExplosion = false
             }, 2000);
-
-            //this.explosionEnemy.draw()
         }
     
-        this.enemies = restPoints
+        this.enemies = restEnemy
     }    
 
     checkCollisionsShip(){
@@ -183,6 +194,5 @@ class Game{
     checkCollisions() {
         this.checkCollisionsEnemy()
         this.checkCollisionsShip()
-        
     }
 }

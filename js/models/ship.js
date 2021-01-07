@@ -57,7 +57,7 @@ class Ship{
         }
     }
 
-    move() {
+    move(){
         this.bullets.forEach(bullet => bullet.move())
         this.ext.x = this.x
         this.ext.y = this.y + 45
@@ -126,10 +126,6 @@ class Ship{
             }
                 break;
          }
-    }
-
-    exhaust(){
-        this.exhaust.forEach(ext => ext.draw())
     }
     
     collidesWith(element) {
