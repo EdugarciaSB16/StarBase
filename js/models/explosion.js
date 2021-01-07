@@ -43,9 +43,7 @@ class Explosion{
                 this.width,
                 this.height
             )
-            
-            console.log(this.x)
-            
+                        
             this.sprite.drawCount++
             this.animate()
         }

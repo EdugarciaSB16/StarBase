@@ -135,39 +135,37 @@ class Game{
 
     checkCollisionsEnemy(){
         //COLISION BULLET -> ENEMY
-       const restPoints = this.enemies.filter((enemy)=>{
+        const prevEnemies = this.enemies.length
+        this.enemies = this.enemies.filter(enemy =>{
+            const collitionedBullet = this.ship.bullets.find(bullet => bullet.collidesWith(enemy))
 
-            if(this.ship.bullet.collidesWith(enemy)){
+            if(collitionedBullet){
+                this.ship.bullets.splice(this.ship.bullets.indexOf(collitionedBullet), 1)
+
                 this.explosionEnemy.horizontalFrameIndex = 0
                 this.explosionEnemy.verticalFrameIndex = 0
                 this.explosionEnemy.x = enemy.x
                 this.explosionEnemy.y = enemy.y
+                this.sounds.explo.currentTime = 0
+                this.sounds.explo.play()
+                this.showExplosion = true
+                //this.explosionEnemy.draw()
+
+                setTimeout(() => {
+                    this.showExplosion = false
+                }, 2000);
+                
+                return false
             }
 
-           return !this.ship.bullet.collidesWith(enemy)
+            return true
         })
     
-        const newPoints = this.enemies.length - restPoints.length
+        const newPoints = prevEnemies - this.enemies.length
         this.points += newPoints
-        
-        if (newPoints) {
-            this.ship.bullets = this.ship.bullets.filter(bullet => !this.ship.bullet.collidesWith(bullet))
-            this.sounds.explo.currentTime = 0
-            this.sounds.explo.play()
-            this.showExplosion = true
-
-            setTimeout(() => {
-                this.showExplosion = false
-            }, 2000);
-
-            //this.explosionEnemy.draw()
-        }
-    
-        this.enemies = restPoints
     }    
 
     checkCollisionsShip(){
-
         if(this.bulletsEnemies.some(bullet => this.ship.collidesWith(bullet))){
         
            this.bulletsEnemies = this.bulletsEnemies.filter(bullet => !this.ship.collidesWith(bullet))
