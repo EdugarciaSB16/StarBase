@@ -5,7 +5,7 @@ const KEY_DOWN= 40
 
 const KEY_BULLET = 32
 const MOVEMENT_FRAMES = 7
-const MOVEMENT_FRAMES_EX = 10
+const MOVEMENT_FRAMES_EX = 3
 const SPEED = 4
 const GRAVITY = 0.4
-const OBS_FRAMES = 120
+//const ENE_FRAMES = 120

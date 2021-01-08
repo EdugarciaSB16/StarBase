@@ -26,7 +26,6 @@ class Ship{
         }
         
         this.bullets = []
-        this.bullet = new Bullet()
         this.ext = new Exhaust(this.ctx, this.x, this.y + 45)
 
         this.sounds = {
@@ -36,7 +35,6 @@ class Ship{
 
     clear(){
         this.bullets = this.bullets.filter(bullet => bullet.x < this.ctx.canvas.width)
-
     }
 
     isReady(){
@@ -113,8 +111,7 @@ class Ship{
 
             case KEY_BULLET:
                 if(this.canFire){
-                    this.bullets.push(
-                       this.bullet =  new Bullet(this.ctx, this.x + this.width, this.y + 55))
+                    this.bullets.push(new Bullet(this.ctx, this.x + this.width, this.y + 55))
                 
                 this.canFire = false
                 this.sounds.theme.currentTime = 0
