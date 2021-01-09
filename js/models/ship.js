@@ -126,9 +126,9 @@ class Ship{
     }
     
     collidesWith(element) {
-        return this.x < element.x + element.width &&
-            this.x + this.width > element.x &&
-            this.y < element.y + element.height &&
-            this.y + this.height > element.y
+        return this.x - 15 < element.x + element.width &&
+            this.x -15 + this.width > element.x &&
+            this.y -15 < element.y + element.height &&
+            this.y - 15 + this.height > element.y
     }
 }
